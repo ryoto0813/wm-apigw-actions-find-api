@@ -38,8 +38,8 @@ jobs:
         id: find-api
         with: 
           apigw-url: http://localhost:5555
-          apigw-user: ${{ secrets.API_GW_USER }}
-          apigw-password: ${{ secrets.API_GW_PASSWORD }}
+          apigw-user: ${{ secrets.APIGW_USER }}
+          apigw-password: ${{ secrets.APIGW_PASSWORD }}
           api-name: 'Swagger Petstore'
           api-version: '1.0.6'
           fail-if-not-found: true
