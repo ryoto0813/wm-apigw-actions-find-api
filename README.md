@@ -52,6 +52,8 @@ jobs:
           echo "Active  = ${{ steps.find-api.outputs.api-is-active }}"
 ```
 
+More examples can be found in this repository's [GitHub workflows](https://github.com/jiridj/wm-apigw-actions-find-api/tree/main/.github/workflows).
+
 ## Questions and Issues
 
 Any questions or issues can be raised via the repository [issues](https://github.com/jiridj/wm-apigw-actions-find-api/issues).

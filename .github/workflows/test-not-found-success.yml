@@ -19,6 +19,7 @@ jobs:
           apigw-password: ${{ secrets.APIGW_PASSWORD }}
           api-name: 'Swagger Petstore'
           api-version: '1.0.7'
+          fail-if-not-found: false
       - name: check-not-found-success
         run: | 
           echo "status:      ${{ steps.find-api-not-found-success.outputs.status }}"
