@@ -1,4 +1,3 @@
-const core = require('@actions/core');
 const axios = require('axios');
 const fs = require('fs');
 
@@ -69,7 +68,7 @@ describe('Unit tests for run', () => {
         process.env['INPUT_API-NAME'] = 'Swagger Petstore';
         process.env['INPUT_FAIL-IF-NOT-FOUND'] = true;
 
-        mocked_stdout = jest.spyOn(process.stdout, 'write').mockImplementation((line) => { ;
+        mocked_stdout = jest.spyOn(process.stdout, 'write').mockImplementation((line) => {
             stdout_lines.push(line.trim());
             return true; 
         });

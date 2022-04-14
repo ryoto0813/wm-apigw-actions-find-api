@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint **.js",
     "test": "jest --coverage --verbose",
-    "package": "ncc build index.js -o dist"
+    "package": "ncc build index.js -o dist",
+    "all": "npm run lint && npm test && npm run package"
   },
   "repository": {
     "type": "git",
@@ -28,6 +30,7 @@
     "axios": "^0.26.1"
   },
   "devDependencies": {
+    "eslint": "^8.13.0",
     "jest": "^27.5.1"
   }
 }
