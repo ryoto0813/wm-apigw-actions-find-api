@@ -1,0 +1,25 @@
+name: test-action
+
+on: 
+  push: 
+    branches: 
+      - main
+  workflow_dispatch:
+
+jobs:
+  test-find-api:
+    runs-on: ubuntu-lastest
+    steps: 
+      - uses: actions/checkout@v2
+      - id: find-api-fails
+        uses: ./
+        with:
+          apigw-url: ${{ secrets.APIGW_URL }}
+          apigw-user: ${{ secrets.APIGW_USERNAME }}
+          apigw-password: ${{ secrets.APIGW_PASSWORD }}
+          api-name: 'Swagger Petstore'
+          api-version: '1.0.7'
+      - name: check-failed
+        if: failure()
+        run: | 
+          echo "status: ${{ steps.find-api-fails.outputs.status }}"

@@ -1,0 +1,32 @@
+{
+  "name": "wm-apigw-actions-find-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --coverage --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jiridj/wm-apigw-actions-find-api.git"
+  },
+  "keywords": [
+    "webMethods",
+    "API Gateway",
+    "GitHub",
+    "Actions"
+  ],
+  "author": "jiri.dejagere@softwareag.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jiridj/wm-apigw-actions-find-api/issues"
+  },
+  "homepage": "https://github.com/jiridj/wm-apigw-actions-find-api#readme",
+  "dependencies": {
+    "@actions/core": "^1.6.0",
+    "axios": "^0.26.1"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1"
+  }
+}

@@ -1,0 +1,29 @@
+name: test-action
+
+on: 
+  push: 
+    branches: 
+      - main
+  workflow_dispatch:
+
+jobs:
+  test-find-api:
+    runs-on: ubuntu-lastest
+    steps: 
+      - uses: actions/checkout@v2
+      - id: find-api-not-found-success
+        uses: ./
+        with:
+          apigw-url: ${{ secrets.APIGW_URL }}
+          apigw-user: ${{ secrets.APIGW_USERNAME }}
+          apigw-password: ${{ secrets.APIGW_PASSWORD }}
+          api-name: 'Swagger Petstore'
+          api-version: '1.0.7'
+      - name: check-not-found-success
+        run: | 
+          echo "status:      ${{ steps.find-api-not-found-success.outputs.status }}"
+          echo "api-id:      ${{ steps.find-api-not-found-success.outputs.api-id }}"
+          echo "api-name:    ${{ steps.find-api-not-found-success.outputs.api-name }}"
+          echo "api-version: ${{ steps.find-api-not-found-success.outputs.api-version }}"
+          echo "api-type:    ${{ steps.find-api-not-found-success.outputs.api-type }}"
+          echo "is-active:   ${{ steps.find-api-not-found-success.outputs.api-is-active }}"

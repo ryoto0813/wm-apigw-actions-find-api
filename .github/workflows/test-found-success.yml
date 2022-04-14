@@ -1,0 +1,29 @@
+name: test-action
+
+on: 
+  push: 
+    branches: 
+      - main
+  workflow_dispatch:
+
+jobs:
+  test-find-api:
+    runs-on: ubuntu-lastest
+    steps: 
+      - uses: actions/checkout@v2
+      - id: find-api-success
+        uses: ./
+        with:
+          apigw-url: ${{ secrets.APIGW_URL }}
+          apigw-user: ${{ secrets.APIGW_USERNAME }}
+          apigw-password: ${{ secrets.APIGW_PASSWORD }}
+          api-name: 'Swagger Petstore'
+          api-version: '1.0.6'
+      - name: check-success
+        run: | 
+          echo "status:      ${{ steps.find-api-success.outputs.status }}"
+          echo "api-id:      ${{ steps.find-api-success.outputs.api-id }}"
+          echo "api-name:    ${{ steps.find-api-success.outputs.api-name }}"
+          echo "api-version: ${{ steps.find-api-success.outputs.api-version }}"
+          echo "api-type:    ${{ steps.find-api-success.outputs.api-type }}"
+          echo "is-active:   ${{ steps.find-api-success.outputs.api-is-active }}"

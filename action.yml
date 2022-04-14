@@ -1,0 +1,39 @@
+name: 'Find an API project in wM API Gateway'
+description: 'Finds an API project within the specified API Gateway instance.'
+branding:
+  icon: 'lock'
+  color: 'blue'
+inputs:
+  apigw-url: 
+    description: 'The url of your (master) API Gateway instance.'
+    required: true
+  apigw-user:
+    description: 'The API Gateway user to execute this action with.'
+    required: true
+  apigw-password:
+    description: 'The password for the API Gateway user to execute this action with.'
+    required: true
+  api-name:
+    description: 'The name of the API project to find.'
+    required: true
+  api-version:
+    description: The version of the API project to look up.
+    required: true
+  fail-if-not-found:
+    description: 'Fail the job if the API could not be found? Defaults to false.' 
+    required: false
+    default: true
+outputs: 
+  api-id:
+    description: 'The unique identifier of the API project.'
+  api-name:
+    description: 'The name of the API project.'
+  api-version:
+    description: 'The version of the API project.'
+  api-type:
+    description: 'The type of the API project.'
+  api-is-active:
+    description: 'Indicates whether the API version is currently active.'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
