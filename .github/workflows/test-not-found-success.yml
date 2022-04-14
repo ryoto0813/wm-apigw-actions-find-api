@@ -22,7 +22,8 @@ jobs:
           fail-if-not-found: false
       - name: check-not-found-success
         run: | 
-          echo "status:      ${{ steps.find-api-not-found-success.outputs.status }}"
+          echo "outcome:     ${{ steps.find-api-not-found-success.outcome }}"
+          echo "conclusion:  ${{ steps.find-api-not-found-success.conclusion }}"
           echo "api-id:      ${{ steps.find-api-not-found-success.outputs.api-id }}"
           echo "api-name:    ${{ steps.find-api-not-found-success.outputs.api-name }}"
           echo "api-version: ${{ steps.find-api-not-found-success.outputs.api-version }}"

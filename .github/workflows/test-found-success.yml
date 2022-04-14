@@ -21,7 +21,8 @@ jobs:
           api-version: '1.0.6'
       - name: check-success
         run: | 
-          echo "status:      ${{ steps.find-api-success.outputs.status }}"
+          echo "outcome:     ${{ steps.find-api-success.outcome }}"
+          echo "conclusion:  ${{ steps.find-api-success.conclusion }}"
           echo "api-id:      ${{ steps.find-api-success.outputs.api-id }}"
           echo "api-name:    ${{ steps.find-api-success.outputs.api-name }}"
           echo "api-version: ${{ steps.find-api-success.outputs.api-version }}"

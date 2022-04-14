@@ -50,8 +50,6 @@ async function run() {
         const api_version = core.getInput('api-version');
         const fail_if_not_found = (core.getInput('fail-if-not-found').toLowerCase() == 'true');
     
-        console.log('fail-if-not-found = ' + fail_if_not_found);
-
         let allApis = await getAllApis(apigw_url, apigw_user, apigw_password);
         
         let api = findApi(allApis, api_name, api_version);
