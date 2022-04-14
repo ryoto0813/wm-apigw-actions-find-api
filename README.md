@@ -34,15 +34,14 @@ jobs:
   find-and-print-api-info:
     runs-on: ubuntu-latest
     steps: 
-      - uses: jiridj/wm-apigw-actions-find-api
+      - uses: jiridj/wm-apigw-actions-find-api@v1-beta.1
         id: find-api
         with: 
-          apigw-url: http://localhost:5555
-          apigw-user: ${{ secrets.APIGW_USER }}
+          apigw-url: ${{ secrets.APIGW_URL }}
+          apigw-user: ${{ secrets.APIGW_USERNAME }}
           apigw-password: ${{ secrets.APIGW_PASSWORD }}
           api-name: 'Swagger Petstore'
           api-version: '1.0.6'
-          fail-if-not-found: true
       - name: print-api-info
         run: |
           echo "ID      = ${{ steps.find-api.outputs.api-id }}"
