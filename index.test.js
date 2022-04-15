@@ -13,6 +13,10 @@ jest.mock('axios');
 const mocked_axios = jest.mocked(axios, true);
 mocked_axios.get.mockResolvedValue({ status: 200, data: allApis});
 
+afterAll(() => {
+    jest.clearAllMocks();
+})
+
 describe('Unit tests for findApi', () => {
     test('findApi Swagger Petstore with version 1.0.6', () => {
         let api = index.findApi(allApis, 'Swagger Petstore', '1.0.6');
