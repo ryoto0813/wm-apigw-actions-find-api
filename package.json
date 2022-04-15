@@ -1,7 +1,7 @@
 {
   "name": "wm-apigw-actions-find-api",
-  "version": "1.0.0",
-  "description": "",
+  "version": "v1-beta.2",
+  "description": "Find an API project in wM API Gateway",
   "main": "index.js",
   "scripts": {
     "lint": "eslint **.js",
