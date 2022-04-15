@@ -46,7 +46,7 @@ jobs:
   find-and-print-api-info:
     runs-on: ubuntu-latest
     steps: 
-      - uses: jiridj/wm-apigw-actions-find-api@v1-beta.1
+      - uses: jiridj/wm-apigw-actions-find-api@v1
         id: find-api
         with: 
           apigw-url: ${{ secrets.APIGW_URL }}
