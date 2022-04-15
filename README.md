@@ -10,10 +10,6 @@ With this action you can query webMethods API Gateway to find the details of an 
 - [Questions and Issues](#questions-and-issues)
 - [License Summary](#license-summary)
 
-
-<!-- tocstop -->
-
-
 ## Inputs
 
 |Input|Required|Description|
