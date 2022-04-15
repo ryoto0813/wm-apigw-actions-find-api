@@ -2,6 +2,9 @@
 
 With this action you can query webMethods API Gateway to find the details of an API project. The step output from this action provides information you can use in following steps in your GitHub Actions workflow job.
 
+## Table of contents
+{:toc}
+
 ## Inputs
 
 |Input|Required|Description|
