@@ -1,6 +1,21 @@
+/**
+ * The following script provides a NodeJS wrapper for the administration and
+ * configuration APIs of webMethods API Gateway to find API project details
+ * via a GitHub Actions workflow step. 
+ */
+
 const core = require('@actions/core');
 const axios = require('axios');
 
+/**
+ * Find an API project with specified name and version in a collection of 
+ * API objects. 
+ *  
+ * @param {*} allApis       Collection of API objects returned by the gateway
+ * @param {*} api_name      The name of the API project
+ * @param {*} api_version   The version of the API project
+ * @returns                 The wanted API object or null
+ */
 function findApi(allApis, api_name, api_version) {
     let api = null;
 
@@ -8,17 +23,27 @@ function findApi(allApis, api_name, api_version) {
         allApis.apiResponse.forEach(item => {
             if (api_name == item.api.apiName && api_version == item.api.apiVersion) {
                 api = item.api;
+                // throwing an error to break the forEach loop
                 throw 'Found';
             }
         });
     }
     catch(e) {
+        // ignore the error we threw to break the forEach loop
         if (e != 'Found') throw e;
     }
 
     return api;
 }
 
+/**
+ * Gets all registered API objects from a wM API Gateway instance.
+ * 
+ * @param {*} apigw_url         Base URL of the wM API Gateway instance
+ * @param {*} apigw_user        Username for authentication with the gateway
+ * @param {*} apigw_password    Password for authentication with the gateway
+ * @returns                     A collection of API objects
+ */
 async function getAllApis(apigw_url, apigw_user, apigw_password) {
     let response;    
     try {
@@ -38,6 +63,10 @@ async function getAllApis(apigw_url, apigw_user, apigw_password) {
     }
 }
 
+/**
+ * Main logic for the GitHub Action step which parses inputs, invokes the 
+ * proper function and sets outputs.
+ */
 async function run() {
     try {
         // Get the API Gateway instance parameters
@@ -54,6 +83,7 @@ async function run() {
         
         let api = findApi(allApis, api_name, api_version);
         if (api != null) {
+            // Set the outputs according to the found API object
             core.setOutput('api-id', api.id);
             core.setOutput('api-name', api.apiName);
             core.setOutput('api-version', api.apiVersion);
@@ -77,6 +107,7 @@ async function run() {
     }
 }
 
+// export the functions for unit testing
 module.exports = { 
     getAllApis,
     findApi,

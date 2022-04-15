@@ -1,44 +1,49 @@
+/**
+ * Unit tests for index.js.
+ */
 const axios = require('axios');
 const fs = require('fs');
 
 const index = require('./index');
 
+// define test constants
 const apigw_url = 'https://localhost:5555';
 const username = 'username';
 const password = 'password';
 
-const allApis = JSON.parse(fs.readFileSync('all-apis.json'));
-
+// initialize jest mocks for the API calls
 jest.mock('axios');
 const mocked_axios = jest.mocked(axios, true);
-mocked_axios.get.mockResolvedValue({ status: 200, data: allApis});
+const all_apis = JSON.parse(fs.readFileSync('all-apis.json'));
+mocked_axios.get.mockResolvedValue({ status: 200, data: all_apis});
 
+// clear all mocks after the unit tests complete
 afterAll(() => {
     jest.clearAllMocks();
 })
 
 describe('Unit tests for findApi', () => {
     test('findApi Swagger Petstore with version 1.0.6', () => {
-        let api = index.findApi(allApis, 'Swagger Petstore', '1.0.6');
+        let api = index.findApi(all_apis, 'Swagger Petstore', '1.0.6');
         expect(api).not.toBeNull();
         expect(api.apiName).toBe('Swagger Petstore');
         expect(api.apiVersion).toBe('1.0.6');
     });
     
     test('findApi Swagger Petstore with version 1.0.7', () => {
-        let api = index.findApi(allApis, 'Swagger Petstore', '1.0.7');
+        let api = index.findApi(all_apis, 'Swagger Petstore', '1.0.7');
         expect(api).toBeNull();
     });
     
     test('findApi DoesNotExist with version 1.0.6', () => {
-        let api = index.findApi(allApis, 'DoesNotExist', '1.0.6');
+        let api = index.findApi(all_apis, 'DoesNotExist', '1.0.6');
         expect(api).toBeNull();
     });
 });
 
 describe('Unit tests for getAllApis', () => { 
     test('getAllApis with mocked response', async () => {
-        let newAllApis = await index.getAllApis(apigw_url, username, password);
+        let new_all_apis = await index.getAllApis(apigw_url, username, password);
         
         expect(mocked_axios.get).toHaveBeenCalledWith(
             `${apigw_url}/rest/apigateway/apis`, 
@@ -52,8 +57,8 @@ describe('Unit tests for getAllApis', () => {
                 }
             }
             );
-        expect(newAllApis).not.toBeNull();
-        expect(newAllApis).toEqual(allApis);
+        expect(new_all_apis).not.toBeNull();
+        expect(new_all_apis).toEqual(all_apis);
     })
 });
 
@@ -66,18 +71,23 @@ describe('Unit tests for run', () => {
     })
 
     beforeAll(() => {
+        // GitHub Actions inputs are passed into the step as environment variables
         process.env['INPUT_APIGW-URL'] = apigw_url;
         process.env['INPUT_APIGW-USER'] = username;
         process.env['INPUT_APIGW-PASSWORD'] = password;
         process.env['INPUT_API-NAME'] = 'Swagger Petstore';
         process.env['INPUT_FAIL-IF-NOT-FOUND'] = true;
 
+        // GitHub Actions outputs and errors are written to stdout, so we need to spy on 
+        // process.stdout.write to know what output values have been set
         mocked_stdout = jest.spyOn(process.stdout, 'write').mockImplementation((line) => {
+            // add each line written to stdout to an array for later consultation
             stdout_lines.push(line.trim());
             return true; 
         });
     });
 
+    // reset stdout spy array before each unit test
     beforeEach(() => {
         stdout_lines = [];
     });
@@ -93,6 +103,7 @@ describe('Unit tests for run', () => {
 
         await index.run();
 
+        // check if the expected stdout lines, setting the output values, were written
         expect(stdout_lines).toContain(expected_api_id);
         expect(stdout_lines).toContain(expected_api_name);
         expect(stdout_lines).toContain(expected_api_version);
@@ -107,6 +118,7 @@ describe('Unit tests for run', () => {
 
         await index.run();
 
+        // check if the expected stdout lines, reporting the desired error, were written
         expect(stdout_lines).toContain(expected_error);
     });
 
@@ -122,6 +134,7 @@ describe('Unit tests for run', () => {
 
         await index.run();
 
+        // check if the expected stdout lines, setting the output values, were written
         expect(stdout_lines).toContain(expected_api_id);
         expect(stdout_lines).toContain(expected_api_name);
         expect(stdout_lines).toContain(expected_api_version);
